@@ -33,3 +33,5 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
 });
+
+module.exports = mongoose.model("orders", orderSchema);
