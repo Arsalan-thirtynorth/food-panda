@@ -61,5 +61,19 @@ const orderDetails = async (req, res) => {
     res.status(400).json(err);
   }
 };
+const cancelOrder = async (req, res) => {
+  try {
+    const findOrder = await order.findOne({ _id: req.params.id });
+    if (!findOrder) {
+      res.status(500).json({ msg: "order does not exist" });
+    } else {
+      const orderServiceI = new orderService();
+      const cancelOrder = await orderServiceI.cancelOrder(req.params.id);
+      res.status(200).json(cancelOrder);
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 
-module.exports = { createOrder, orderDetails };
+module.exports = { createOrder, orderDetails, cancelOrder };

@@ -5,11 +5,15 @@ const app = express();
 
 const userRoute = require("./src/routes/userRoutes");
 const restaurantRoute = require("./src/routes/restaurantRoutes");
-const orderRoutes = require("./src/routes/orderRoutes");
+const orderRoute = require("./src/routes/orderRoutes");
+const reviewRoute = require("./src/routes/reviewRoutes");
+const dealRoute = require("./src/routes/dealRoutes");
 
 app.use("/user", userRoute);
 app.use("/restaurant", restaurantRoute);
-app.use("/order", orderRoutes);
+app.use("/order", orderRoute);
+app.use("/review", reviewRoute);
+app.use("/deals", dealRoute);
 
 process.on("uncaughtException", (error) => {
   console.error("Oh my god, something terrible happened: ", error);

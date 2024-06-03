@@ -20,6 +20,14 @@ class orderService {
     const result = await newOrder.save();
     return newOrder;
   }
+  async cancelOrder(data) {
+    try {
+      const deleteOrder = await order.deleteOne({ _id: data });
+      return deleteOrder;
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  }
 }
 
 module.exports = { orderService };

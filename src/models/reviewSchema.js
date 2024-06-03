@@ -9,11 +9,11 @@ const reviewSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
   },
-  Comment: {
+  comment: {
     type: String,
     required: true,
   },
-  Rating: {
+  rating: {
     type: Number,
     required: true,
   },

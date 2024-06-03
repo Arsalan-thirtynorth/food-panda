@@ -28,6 +28,9 @@ const orderSchema = new mongoose.Schema({
     ],
     required: true,
   },
+  discount: {
+    type: Number,
+  },
   receiveMethod: {
     type: String,
     required: true,
