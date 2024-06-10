@@ -93,6 +93,7 @@ class adminService {
       },
       {
         $unwind: "$items",
+        presverNUllAndEmptyArray,
       },
       {
         $project: {
