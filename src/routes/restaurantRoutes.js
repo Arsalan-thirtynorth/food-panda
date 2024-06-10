@@ -20,6 +20,7 @@ router.route("/:id").get(specificRestaurantDetail);
 router.route("/").post(createRestaurant);
 router.route("/:id").put(updatedRestaurant);
 router.route("/:id").delete(deleteRestaurants);
+
 router.route("/:id/menu/item").post(addMenuItem);
 router.route("/:id/menu").get(showRestaurantMenu);
 router.route("/:id/menu/item/:itemId").put(updateRestaurantMenuItem);

@@ -116,5 +116,34 @@ const editUserData = async (req, res) => {
     res.status(400).json(err);
   }
 };
+const deleteUser = async (req, res) => {
+  try {
+    if (!req.body.password) {
+      const findUser = await user.findById(req.params.id);
+      if (!findUser) {
+        res.status(500).json({ msg: "user does not exist" });
+      } else {
+        const token = req.headers.authorization.split(" ")[1]; // Assuming the token is sent in the Authorization header with Bearer prefix
+        jwt.verify(token, key, async (err, decoded) => {
+          if (err) {
+            res.status(401).json({ msg: "Invalid token" });
+          } else {
+            const verifiedId = decoded._id;
+            if (verifiedId === req.params.id) {
+              const deleteUser = await user.deleteOne({ _id: req.params.id });
+              res.status(200).json({ msg: "User deleted successfully" });
+            } else {
+              res.status(401).json({ msg: "Unauthorized" });
+            }
+          }
+        });
+      }
+    } else {
+      res.status(401).json({ msg: "you are not allowed to change password" });
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};
 
-module.exports = { register, login, userDetail, editUserData };
+module.exports = { register, login, userDetail, editUserData, deleteUser };
