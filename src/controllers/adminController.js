@@ -78,6 +78,28 @@ const getSingelOrder = async (req, res) => {
   }
 };
 
+const getdeals = async (req, res) => {
+  try {
+    const adminServiceI = new adminService();
+    const adminServiceResponse = await adminServiceI.getdeals();
+    res.status(200).json(adminServiceResponse);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getSpecificDeal = async (req, res) => {
+  try {
+    const adminServiceI = new adminService();
+    const adminServiceResponse = await adminServiceI.getSpecificDeal(
+      req.params.id
+    );
+    res.status(200).json(adminServiceResponse);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getUsers,
   getUserDetails,
@@ -86,4 +108,6 @@ module.exports = {
   getRestaurantMenu,
   getOrders,
   getSingelOrder,
+  getdeals,
+  getSpecificDeal,
 };

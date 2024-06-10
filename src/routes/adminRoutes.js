@@ -10,8 +10,11 @@ const {
   getRestaurantMenu,
   getOrders,
   getSingelOrder,
+  getdeals,
+  getSpecificDeal,
 } = require("../controllers/adminController");
 const { editUserData, deleteUser } = require("../controllers/userController");
+const { delOrder } = require("../controllers/dealController");
 const {
   createRestaurant,
   deleteRestaurants,
@@ -46,5 +49,9 @@ router.route("/order").post(createOrder);
 router.route("/order").get(getOrders);
 router.route("/order/:id").get(getSingelOrder);
 router.route("/order/:id").delete(cancelOrder);
+
+router.route("/deals").get(getdeals);
+router.route("/deals/:id").delete(delOrder);
+router.route("/deals/:id").get(getSpecificDeal);
 
 module.exports = router;

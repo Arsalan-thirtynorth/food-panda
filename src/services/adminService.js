@@ -207,6 +207,131 @@ class adminService {
       },
     ]);
   }
+
+  async getdeals() {
+    return await deals.aggregate([
+      {
+        $lookup: {
+          from: "products",
+          let: {
+            productId: "$items.productId",
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $in: ["$_id", "$$productId"],
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                restaurantId: 0,
+              },
+            },
+          ],
+          as: "items",
+        },
+      },
+      {
+        $lookup: {
+          from: "restaurants",
+          let: {
+            restaurantId: "$restaurantId",
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", "$$restaurantId"],
+                },
+              },
+            },
+            {
+              $project: {
+                name: 1,
+                description: 1,
+                address: 1,
+              },
+            },
+          ],
+          as: "restaurant",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          restaurantId: 0,
+        },
+      },
+    ]);
+  }
+
+  async getSpecificDeal(id) {
+    return await deals.aggregate([
+      {
+        $match: {
+          _id: new mongoose.Types.ObjectId(id),
+        },
+      },
+      {
+        $lookup: {
+          from: "products",
+          let: {
+            productId: "$items.productId",
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $in: ["$_id", "$$productId"],
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                restaurantId: 0,
+              },
+            },
+          ],
+          as: "items",
+        },
+      },
+      {
+        $lookup: {
+          from: "restaurants",
+          let: {
+            restaurantId: "$restaurantId",
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $eq: ["$_id", "$$restaurantId"],
+                },
+              },
+            },
+            {
+              $project: {
+                name: 1,
+                description: 1,
+                address: 1,
+              },
+            },
+          ],
+          as: "restaurant",
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          restaurantId: 0,
+        },
+      },
+    ]);
+  }
 }
 
 module.exports = adminService;
